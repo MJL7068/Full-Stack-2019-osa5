@@ -3,6 +3,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import BlogList from './components/BlogList'
+import AddBlogForm from './components/AddBlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -13,6 +14,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
+  const [addBlogVisible, setAddBlogVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -85,12 +87,38 @@ const App = () => {
     }
   }
 
+  const addBlogForm = () => {
+    const hideWhenVisible = { display: addBlogVisible ? 'none' : '' }
+    const showWhenVisible = { display: addBlogVisible ? '' : 'none' }
+
+    return (
+      <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setAddBlogVisible(true)}>create</button>
+        </div>
+        <div style={showWhenVisible}>
+          <AddBlogForm
+            title={title} setTitle={setTitle} 
+            author={author} setAuthor={setAuthor} 
+            url={url} setUrl={setUrl} 
+            addBlog={addBlog}
+          />
+          <button onClick={() => setAddBlogVisible(false)}>cancel</button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div>
       {user === null ?
         <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} message={message} /> :
         
-        <BlogList blogs={blogs} user={user} handleLogout={handleLogout} title={title} setTitle={setTitle} author={author} setAuthor={setAuthor} url={url} setUrl={setUrl} addBlog={addBlog} message={message} />
+        <BlogList 
+          blogs={blogs} user={user} handleLogout={handleLogout} 
+          message={message}
+          addBlogForm={addBlogForm} 
+        />
       }
     </div>
   )
