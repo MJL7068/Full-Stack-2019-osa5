@@ -49,6 +49,8 @@ const App = () => {
   const handleLogout = (event) => {
     event.preventDefault()
     try {
+      window.localStorage.removeItem('loggedBlogappUser')
+
       setUser(null)
     } catch (exception) {
       console.log(exception)
