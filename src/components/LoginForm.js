@@ -1,8 +1,12 @@
 import React from 'react'
+import Notification from './Notification'
 
-const LoginForm = ({handleLogin, username, setUsername, password, setPassword}) => (
+const LoginForm = ({handleLogin, username, setUsername, password, setPassword, message}) => (
   <div>
     <h2>log in to application</h2>
+
+    <Notification message={message}/>
+
     <form onSubmit={handleLogin}>
       <div>
         käyttäjätunnus
