@@ -7,6 +7,9 @@ import BlogList from './components/BlogList'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -25,6 +28,23 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  const addBlog = async (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: title,
+      author: author,
+      url: url
+    }
+
+    blogService
+      .create(blogObject).then(returnedObject => {
+        setBlogs(blogs.concat(returnedObject))
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+      })
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -62,7 +82,7 @@ const App = () => {
       {user === null ?
         <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/> :
         
-        <BlogList blogs={blogs} user={user} handleLogout={handleLogout} />
+        <BlogList blogs={blogs} user={user} handleLogout={handleLogout} title={title} setTitle={setTitle} author={author} setAuthor={setAuthor} url={url} setUrl={setUrl} addBlog={addBlog} />
       }
     </div>
   )
