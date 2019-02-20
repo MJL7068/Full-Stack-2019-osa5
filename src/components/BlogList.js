@@ -2,7 +2,7 @@ import React from 'react'
 import Blog from '../components/Blog'
 import Notification from './Notification'
 
-const blogList = ({blogs, user, handleLogout, message, addBlogForm, addLike, ref}) => (
+const blogList = ({blogs, user, handleLogout, message, addBlogForm, addLike, removeBlog, ref}) => (
   <div>
     <h2>blogs</h2>
     <Notification message={message}/>
@@ -17,6 +17,7 @@ const blogList = ({blogs, user, handleLogout, message, addBlogForm, addLike, ref
         key={blog.id} 
         blog={blog} 
         addLike={addLike}
+        removeBlog={removeBlog}
         ref={ref}
       />
     )}

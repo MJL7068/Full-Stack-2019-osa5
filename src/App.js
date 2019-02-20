@@ -108,6 +108,23 @@ const App = () => {
     }
   }
 
+  const removeBlog = (blog) => {
+    return () => {
+      if (window.confirm(`remove blog ${blog.title} by ${blog.author}`)) {
+        blogService
+          .remove(blog._id)
+          .then(() => {
+            setBlogs(blogs.filter(b => b._id !== blog._id).sort((a, b) => b.likes - a.likes))
+
+            setMessage(`${blog.title} removed`)
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
+          })
+      }
+    }
+  }
+
   //const blogRef = React.createRef()
 
   const addBlogForm = () => {
@@ -154,6 +171,7 @@ const App = () => {
           message={message}
           addBlogForm={addBlogForm}
           addLike={addLike}
+          removeBlog={removeBlog}
           //ref={blogRef}
         />
       }
