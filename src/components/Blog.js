@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useImperativeHandle } from 'react'
 
-const Blog = ({ blog, addLike }) => {
+const Blog = React.forwardRef(({ blog, addLike }, ref) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -9,28 +9,54 @@ const Blog = ({ blog, addLike }) => {
     marginBottom: 5
   }
 
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   
-  const hideWhenVisible = { display: visible ? 'none' : '' }
-  const showWhenVisible = { display: visible ? '' : 'none' }
+  //const hideWhenVisible = { display: visible ? 'none' : '' }
+  //const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
   }
 
-  return(
-    <div style={blogStyle} onClick={toggleVisibility}>
-      <div style={hideWhenVisible}>
+  /*useImperativeHandle(ref, () => {
+    return {
+      toggleVisibility    
+    }
+  })*/
+
+  if (visible) {
+    return(
+      <div style={blogStyle} onClick={toggleVisibility}>
         {blog.title} {blog.author}
         <p>{blog.url}</p>
-        <p>{blog.likes} likes <button onClick={addLike(blog)}>like</button></p>
+        <p>{blog.likes} likes <button type="submit" onClick={addLike(blog)}>like</button></p>
         <p>added by {blog.user.name}</p>
       </div>
-      <div syle={showWhenVisible}>
+    )
+  } else {
+    return(
+      <div syle={blogStyle} onClick={toggleVisibility}>
         {blog.title} {blog.author}
       </div>
-    </div>
-  )
-}
+    )
+  }
+
+})
 
 export default Blog
+
+/*
+return(
+  <div style={blogStyle} onClick={toggleVisibility}>
+    <div style={hideWhenVisible}>
+      {blog.title} {blog.author}
+      <p>{blog.url}</p>
+      <p>{blog.likes} likes <button onClick={addLike(blog)}>like</button></p>
+      <p>added by {blog.user.name}</p>
+    </div>
+    <div syle={showWhenVisible}>
+      {blog.title} {blog.author}
+    </div>
+  </div>
+)
+*/

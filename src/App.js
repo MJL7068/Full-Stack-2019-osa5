@@ -18,8 +18,8 @@ const App = () => {
   //const [addBlogVisible, setAddBlogVisible] = useState(false)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+    blogService.getAll().then(blogs => 
+        setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
     )  
   }, [])
 
@@ -90,6 +90,8 @@ const App = () => {
 
   const addLike = (blog) => {
     return () => {
+      //blogRef.current.toggleVisibility()
+
       const blogObject = {
         user: blog.user.id,
         likes: blog.likes + 1,
@@ -101,10 +103,12 @@ const App = () => {
       blogService
         .update(blog._id, blogObject)
         .then(returnedBlog => {
-          setBlogs(blogs.map(b => b._id !== blog._id ? b : returnedBlog))
+          setBlogs(blogs.map(b => b._id !== blog._id ? b : returnedBlog).sort((a, b) => b.likes - a.likes))
         })
     }
   }
+
+  //const blogRef = React.createRef()
 
   const addBlogForm = () => {
     /*const hideWhenVisible = { display: addBlogVisible ? 'none' : '' }
@@ -150,6 +154,7 @@ const App = () => {
           message={message}
           addBlogForm={addBlogForm}
           addLike={addLike}
+          //ref={blogRef}
         />
       }
     </div>
