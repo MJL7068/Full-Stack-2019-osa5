@@ -2,7 +2,7 @@ import React from 'react'
 import Blog from '../components/Blog'
 import Notification from './Notification'
 
-const blogList = ({blogs, user, handleLogout, message, addBlogForm}) => (
+const blogList = ({blogs, user, handleLogout, message, addBlogForm, addLike}) => (
   <div>
     <h2>blogs</h2>
     <Notification message={message}/>
@@ -13,7 +13,11 @@ const blogList = ({blogs, user, handleLogout, message, addBlogForm}) => (
     {addBlogForm()}
     
     {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
+      <Blog 
+        key={blog.id} 
+        blog={blog} 
+        addLike={addLike} 
+      />
     )}
   </div>
 )

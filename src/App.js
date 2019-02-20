@@ -4,6 +4,7 @@ import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import BlogList from './components/BlogList'
 import AddBlogForm from './components/AddBlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -14,7 +15,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
-  const [addBlogVisible, setAddBlogVisible] = useState(false)
+  //const [addBlogVisible, setAddBlogVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -87,8 +88,26 @@ const App = () => {
     }
   }
 
+  const addLike = (blog) => {
+    return () => {
+      const blogObject = {
+        user: blog.user.id,
+        likes: blog.likes + 1,
+        author: blog.author,
+        title: blog.title,
+        url: blog.url
+      }
+
+      blogService
+        .update(blog._id, blogObject)
+        .then(returnedBlog => {
+          setBlogs(blogs.map(b => b._id !== blog._id ? b : returnedBlog))
+        })
+    }
+  }
+
   const addBlogForm = () => {
-    const hideWhenVisible = { display: addBlogVisible ? 'none' : '' }
+    /*const hideWhenVisible = { display: addBlogVisible ? 'none' : '' }
     const showWhenVisible = { display: addBlogVisible ? '' : 'none' }
 
     return (
@@ -106,6 +125,18 @@ const App = () => {
           <button onClick={() => setAddBlogVisible(false)}>cancel</button>
         </div>
       </div>
+    )*/
+    return(
+      <div>
+        <Togglable buttonLabel="new blog" >
+          <AddBlogForm
+            title={title} setTitle={setTitle} 
+            author={author} setAuthor={setAuthor} 
+            url={url} setUrl={setUrl} 
+            addBlog={addBlog}
+          />
+         </Togglable>    
+      </div>
     )
   }
 
@@ -117,7 +148,8 @@ const App = () => {
         <BlogList 
           blogs={blogs} user={user} handleLogout={handleLogout} 
           message={message}
-          addBlogForm={addBlogForm} 
+          addBlogForm={addBlogForm}
+          addLike={addLike}
         />
       }
     </div>
