@@ -45,19 +45,3 @@ const Blog = React.forwardRef(({ blog, addLike, removeBlog }, ref) => {
 })
 
 export default Blog
-
-/*
-return(
-  <div style={blogStyle} onClick={toggleVisibility}>
-    <div style={hideWhenVisible}>
-      {blog.title} {blog.author}
-      <p>{blog.url}</p>
-      <p>{blog.likes} likes <button onClick={addLike(blog)}>like</button></p>
-      <p>added by {blog.user.name}</p>
-    </div>
-    <div syle={showWhenVisible}>
-      {blog.title} {blog.author}
-    </div>
-  </div>
-)
-*/
