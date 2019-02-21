@@ -167,7 +167,9 @@ const App = () => {
         <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} message={message} /> :
         
         <BlogList 
-          blogs={blogs} user={user} handleLogout={handleLogout} 
+          blogs={blogs}
+          user={user}
+          handleLogout={handleLogout} 
           message={message}
           addBlogForm={addBlogForm}
           addLike={addLike}

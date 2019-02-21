@@ -14,7 +14,8 @@ const blogList = ({blogs, user, handleLogout, message, addBlogForm, addLike, rem
     
     {blogs.map(blog =>
       <Blog 
-        key={blog.id} 
+        key={blog.id}
+        user={user} 
         blog={blog} 
         addLike={addLike}
         removeBlog={removeBlog}

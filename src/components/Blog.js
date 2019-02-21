@@ -1,6 +1,6 @@
 import React, { useState, useImperativeHandle } from 'react'
 
-const Blog = React.forwardRef(({ blog, addLike, removeBlog }, ref) => {
+const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }, ref) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -10,9 +10,6 @@ const Blog = React.forwardRef(({ blog, addLike, removeBlog }, ref) => {
   }
 
   const [visible, setVisible] = useState(false)
-  
-  //const hideWhenVisible = { display: visible ? 'none' : '' }
-  //const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -31,7 +28,9 @@ const Blog = React.forwardRef(({ blog, addLike, removeBlog }, ref) => {
         <p>{blog.url}</p>
         <p>{blog.likes} likes <button type="submit" onClick={addLike(blog)}>like</button></p>
         <p>added by {blog.user.name}</p>
-        <button type="submit" onClick={removeBlog(blog)}>remove</button>
+        {
+          (user.username === blog.user.username) ? <button type="submit" onClick={removeBlog(blog)}>remove</button> : null
+        }
       </div>
     )
   } else {
