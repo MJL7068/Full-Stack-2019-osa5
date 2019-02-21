@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useField } from './hooks'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
@@ -8,11 +9,12 @@ import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
+  const username = useField('text')
+  const password = useField('password')
+
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
 
@@ -34,18 +36,18 @@ const App = () => {
   const addBlog = async (event) => {
     event.preventDefault()
     const blogObject = {
-      title: title,
-      author: author,
-      url: url
+      title: title.value,
+      author: author.value,
+      url: url.value
     }
 
     blogService
       .create(blogObject).then(returnedObject => {
         setBlogs(blogs.concat(returnedObject))
-        setTitle('')
-        setAuthor('')
-        setUrl('')
-        setMessage(`a new blog ${title} by ${author} added`)
+        title.reset()
+        author.reset()
+        url.reset()
+        setMessage(`a new blog ${title.value} by ${author.value} added`)
 
         setTimeout(() => {
           setMessage(null)
@@ -57,7 +59,8 @@ const App = () => {
     event.preventDefault()
     try {
       const user = await loginService.login({
-        username, password
+        username: username.value,
+        password: password.value
       })
 
       window.localStorage.setItem(
@@ -66,8 +69,8 @@ const App = () => {
 
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
+      username.reset()
+      password.reset()
     } catch (exception) {
       setMessage('Wrong username or password')
       setTimeout(() => {
@@ -131,9 +134,9 @@ const App = () => {
       <div>
         <Togglable buttonLabel="new blog" >
           <AddBlogForm
-            title={title} setTitle={setTitle}
-            author={author} setAuthor={setAuthor}
-            url={url} setUrl={setUrl}
+            title={title}
+            author={author}
+            url={url}
             addBlog={addBlog}
           />
         </Togglable>
@@ -142,9 +145,14 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className='mainpage'>
       {user === null ?
-        <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} message={message} /> :
+        <LoginForm
+          handleLogin={handleLogin}
+          username={username}
+          password={password}
+          message={message}
+        /> :
 
         <BlogList
           blogs={blogs}

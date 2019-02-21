@@ -1,7 +1,7 @@
 import React from 'react'
 import Notification from './Notification'
 
-const LoginForm = ({ handleLogin, username, setUsername, password, setPassword, message }) => (
+const LoginForm = ({ handleLogin, username, password, message }) => (
   <div>
     <h2>log in to application</h2>
 
@@ -10,21 +10,13 @@ const LoginForm = ({ handleLogin, username, setUsername, password, setPassword, 
     <form onSubmit={handleLogin}>
       <div>
         käyttäjätunnus
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
+        <input {...username} />
+        <br/>
       </div>
       <div>
         salasana
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
+        <input {...password} />
+        <br/>
       </div>
       <button type="submit">kirjaudu</button>
     </form>
