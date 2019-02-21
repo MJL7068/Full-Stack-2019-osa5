@@ -15,12 +15,11 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
-  //const [addBlogVisible, setAddBlogVisible] = useState(false)
 
   useEffect(() => {
-    blogService.getAll().then(blogs => 
-        setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
-    )  
+    blogService.getAll().then(blogs =>
+      setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
+    )
   }, [])
 
   useEffect(() => {
@@ -128,35 +127,16 @@ const App = () => {
   //const blogRef = React.createRef()
 
   const addBlogForm = () => {
-    /*const hideWhenVisible = { display: addBlogVisible ? 'none' : '' }
-    const showWhenVisible = { display: addBlogVisible ? '' : 'none' }
-
-    return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setAddBlogVisible(true)}>create</button>
-        </div>
-        <div style={showWhenVisible}>
-          <AddBlogForm
-            title={title} setTitle={setTitle} 
-            author={author} setAuthor={setAuthor} 
-            url={url} setUrl={setUrl} 
-            addBlog={addBlog}
-          />
-          <button onClick={() => setAddBlogVisible(false)}>cancel</button>
-        </div>
-      </div>
-    )*/
     return(
       <div>
         <Togglable buttonLabel="new blog" >
           <AddBlogForm
-            title={title} setTitle={setTitle} 
-            author={author} setAuthor={setAuthor} 
-            url={url} setUrl={setUrl} 
+            title={title} setTitle={setTitle}
+            author={author} setAuthor={setAuthor}
+            url={url} setUrl={setUrl}
             addBlog={addBlog}
           />
-         </Togglable>    
+        </Togglable>
       </div>
     )
   }
@@ -165,11 +145,11 @@ const App = () => {
     <div>
       {user === null ?
         <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} message={message} /> :
-        
-        <BlogList 
+
+        <BlogList
           blogs={blogs}
           user={user}
-          handleLogout={handleLogout} 
+          handleLogout={handleLogout}
           message={message}
           addBlogForm={addBlogForm}
           addLike={addLike}
