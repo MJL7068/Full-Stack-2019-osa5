@@ -1,55 +1,62 @@
 import React from 'react'
-import { render, cleanup, testHook } from 'react-testing-library'
+import { render, fireEvent, cleanup, testHook } from 'react-testing-library'
 import { prettyDOM } from 'dom-testing-library'
 import SimpleBlog from './SimpleBlog'
 
-test('renders title', () => {
-  const blog = {
-    title: 'DevOps',
-    author: 'A. Korhonen',
-    likes: 12
-  }
+describe('<SimpleBlog />', () => {
+  let component
 
-  const component = render(
-    <SimpleBlog blog={blog} />
-  )
+  beforeEach(() => {
+    const blog = {
+      title: 'DevOps',
+      author: 'A. Korhonen',
+      likes: 12
+    }
 
-  const div = component.container.querySelector('.blog')
-  expect(div).toHaveTextContent(
-    'DevOps'
-  )
+    component = render(
+      <SimpleBlog blog={blog} />
+    )
+  })
+
+  test('renders title', () => {
+    const div = component.container.querySelector('.blog')
+    expect(div).toHaveTextContent(
+      'DevOps'
+    )
+  })
+
+  test('renders author', () => {
+    const div = component.container.querySelector('.blog')
+    expect(div).toHaveTextContent(
+      'A. Korhonen'
+    )
+  })
+
+  test('renders likes', () => {
+    const div = component.container.querySelector('.blog')
+    expect(div).toHaveTextContent(
+      'blog has 12 likes'
+    )
+  })
+
 })
 
-test('renders author', () => {
+it('clicking the button twice calls event handler twice', async () => {
   const blog = {
     title: 'DevOps',
     author: 'A. Korhonen',
     likes: 12
   }
 
-  const component = render(
-    <SimpleBlog blog={blog} />
+  const mockHandler = jest.fn()
+
+  const { getByText } = render(
+    <SimpleBlog blog={blog} onClick={mockHandler} />
   )
 
-  const div = component.container.querySelector('.blog')
-  expect(div).toHaveTextContent(
-    'A. Korhonen'
-  )
-})
+  const button = getByText('like')
+  fireEvent.click(button)
+  fireEvent.click(button)
 
-test('renders likes', () => {
-  const blog = {
-    title: 'DevOps',
-    author: 'A. Korhonen',
-    likes: 12
-  }
-
-  const component = render(
-    <SimpleBlog blog={blog} />
-  )
-
-  const div = component.container.querySelector('.blog')
-  expect(div).toHaveTextContent(
-    'blog has 12 likes'
-  )
+  expect(mockHandler.mock.calls.length).toBe(2)
 })
