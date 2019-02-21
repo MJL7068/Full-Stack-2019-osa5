@@ -38,7 +38,6 @@ describe('<SimpleBlog />', () => {
       'blog has 12 likes'
     )
   })
-
 })
 
 it('clicking the button twice calls event handler twice', async () => {

@@ -23,7 +23,7 @@ const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }/*, ref*/) => 
 
   if (visible) {
     return(
-      <div style={blogStyle} onClick={toggleVisibility}>
+      <div style={blogStyle} onClick={toggleVisibility} className="BlogInfo">
         {blog.title} {blog.author}
         <p>{blog.url}</p>
         <p>{blog.likes} likes <button type="submit" onClick={addLike(blog)}>like</button></p>
@@ -35,7 +35,7 @@ const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }/*, ref*/) => 
     )
   } else {
     return(
-      <div syle={blogStyle} onClick={toggleVisibility}>
+      <div syle={blogStyle} onClick={toggleVisibility} className="BlogInfo">
         {blog.title} {blog.author}
       </div>
     )
