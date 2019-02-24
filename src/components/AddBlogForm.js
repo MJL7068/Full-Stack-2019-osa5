@@ -28,9 +28,9 @@ const AddBlogForm = ({ title, author, url, addBlog }) => {
 
 AddBlogForm.propTypes = {
   addBlog: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired
+  title: PropTypes.object.isRequired,
+  author: PropTypes.object.isRequired,
+  url: PropTypes.object.isRequired
 }
 
 export default AddBlogForm

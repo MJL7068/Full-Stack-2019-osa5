@@ -34,16 +34,12 @@ describe('<App />', () => {
     )
 
     component.rerender(<App />)
-    /*await waitForElement(
+    await waitForElement(
       () => component.container.querySelector('.BlogInfo')
     )
 
     const blogs = component.container.querySelectorAll('.BlogInfo')
-    expect(blogs.length).toBe(3)*/
-
-    await waitForElement(
-      () => component.getByText('blogs')
-    )
+    expect(blogs.length).toBe(3)
 
     const div = component.container.querySelector('.mainpage')
     expect(div).toHaveTextContent('blogs')

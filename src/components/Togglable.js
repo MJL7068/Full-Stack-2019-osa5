@@ -7,7 +7,7 @@ const Togglable = (props) => {
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
-      setVisible(!visible)
+    setVisible(!visible)
   }
 
   return(
