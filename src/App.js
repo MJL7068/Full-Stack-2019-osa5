@@ -92,7 +92,7 @@ const App = () => {
 
   const addLike = (blog) => {
     return () => {
-      //blogRef.current.toggleVisibility()
+      //blogRef.current.toggleVisibility(blog)
 
       const blogObject = {
         user: blog.user.id,
@@ -127,7 +127,7 @@ const App = () => {
     }
   }
 
-  //const blogRef = React.createRef()
+  /*const blogRef = React.createRef()*/
 
   const addBlogForm = () => {
     return(
@@ -162,7 +162,7 @@ const App = () => {
           addBlogForm={addBlogForm}
           addLike={addLike}
           removeBlog={removeBlog}
-          //ref={blogRef}
+          /*ref={blogRef}*/
         />
       }
     </div>

@@ -1,6 +1,6 @@
-import React, { useState/*, useImperativeHandle*/ } from 'react'
+import React, { useState, useImperativeMethods } from 'react'
 
-const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }/*, ref*/) => {
+const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }, ref) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -15,11 +15,11 @@ const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }/*, ref*/) => 
     setVisible(!visible)
   }
 
-  /*useImperativeHandle(ref, () => {
+  useImperativeMethods(ref, () => {
     return {
       toggleVisibility
     }
-  })*/
+  })
 
   if (visible) {
     return(
